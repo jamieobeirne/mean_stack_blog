@@ -1,9 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormGroup, FormControl, Validators, NG_ASYNC_VALIDATORS } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 
 import { PostsService } from "../posts.service";
 import { Post } from "../post.model";
+
+import { mimeType} from "./mime-type.validator"
+import { async } from "@angular/core/testing";
 
 @Component({
   selector: "app-post-create",
@@ -31,7 +34,10 @@ export class PostCreateComponent implements OnInit {
         validators: [Validators.required, Validators.minLength(3)]
       }),
       content: new FormControl(null, { validators: [Validators.required] }),
-      image: new FormControl(null, {validators: [Validators.required]})
+      image: new FormControl(null, {
+        validators: [Validators.required],
+        asyncValidators: [mimeType] //with this validator, we conly accept images
+      })
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has("postId")) {
@@ -58,19 +64,21 @@ export class PostCreateComponent implements OnInit {
   }
 
   onImagePicked(event: Event) {
-    const file = (event.target as HTMLInputElement).files[0];
+    const file = (event.target as HTMLInputElement).files[0];//tells Angular this is a HTMLInputElement
     this.form.patchValue({image: file});
-    this.form.get('image').updateValueAndValidity();
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreview = reader.result as string;
-    };
+    this.form.get('image').updateValueAndValidity();//stores image
+
+    const reader = new FileReader(); //creates a preview image
+    reader.onload = () => { //defines an onload event
+      this.imagePreview = reader.result as string;//converts image file
+    };                                            //into something that can be read. This gets
+                                                  //bound in the templateb
     reader.readAsDataURL(file);
   }
 
   onSavePost() {
     if (this.form.invalid) {
-      console.log("invalid form")
+      console.log("invalid form ")
       return;
     }
     this.isLoading = true;
