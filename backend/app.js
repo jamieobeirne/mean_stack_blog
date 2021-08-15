@@ -1,15 +1,18 @@
+const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const postsRoutes = require ("./routes/posts");
+const postsRoutes = require("./routes/posts");
 
 const app = express();
 
-
 mongoose
   .connect(
-    "mongodb+srv://jamie:jsacSzVQ484rItHy@cluster0.x4x2k.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    "mongodb://jamie:jsacSzVQ484rItHy@cluster0-shard-00-00.x4x2k.mongodb.net:27017,cluster0-shard-00-01.x4x2k.mongodb.net:27017,cluster0-shard-00-02.x4x2k.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-ibq4fy-shard-0&authSource=admin&retryWrites=true&w=majority",
+    { useNewUrlParser: true,
+      useUnifiedTopology: true
+     }
   )
   .then(() => {
     console.log("Connected to database!");
@@ -20,6 +23,7 @@ mongoose
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use("/images", express.static(path.join("backend/images")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

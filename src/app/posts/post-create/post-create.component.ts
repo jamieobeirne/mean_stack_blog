@@ -26,6 +26,7 @@ export class PostCreateComponent implements OnInit {
     public route: ActivatedRoute
   ) {}
 
+
   ngOnInit() {
     this.form = new FormGroup({
       title: new FormControl(null, {
