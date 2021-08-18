@@ -5,4 +5,6 @@ import { logging } from "protractor";
   templateUrl: "./login.component.html"
 })
 
-export class LoginComponent {}
+export class LoginComponent {
+   isLoading = false;
+}

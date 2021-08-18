@@ -1,7 +1,17 @@
+mat-form-field,
+textarea {
+  width: 100%;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
 ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
 }
 
 a {
