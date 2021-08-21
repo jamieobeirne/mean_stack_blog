@@ -9,7 +9,7 @@ const app = express();
 
 mongoose
   .connect(
-    "mongodb://jamie:jsacSzVQ484rItHy@cluster0-shard-00-00.x4x2k.mongodb.net:27017,cluster0-shard-00-01.x4x2k.mongodb.net:27017,cluster0-shard-00-02.x4x2k.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-ibq4fy-shard-0&authSource=admin&retryWrites=true&w=majority",
+    "mongodb://jamie:jsacSzVQ484rItHy@cluster0-shard-00-00.x4x2k.mongodb.net:27017,cluster0-shard-00-01.x4x2k.mongodb.net:27017,cluster0-shard-00-02.x4x2k.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-ibq4fy-shard-0&authSource=admin&w=majority",
     { useNewUrlParser: true,
       useUnifiedTopology: true
      }
