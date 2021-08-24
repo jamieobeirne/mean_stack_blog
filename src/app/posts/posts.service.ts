@@ -17,8 +17,9 @@ export class PostsService {
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
     this.http
       .get<{ message: string; posts: any; maxPosts: number }>(
-        "http://localhost:3000/api/posts" + queryParams
-      )
+        //"http://localhost:3000/api/posts" + queryParams//
+        "http://blog-env.eba-xen2vqe3.us-east-2.elasticbeanstalk.com/api/posts" + queryParams
+        )
       .pipe(
         map(postData => {
           return {
@@ -53,7 +54,8 @@ export class PostsService {
       title: string;
       content: string;
       imagePath: string;
-    }>("http://localhost:3000/api/posts/" + id);
+   //}>("http://localhost:3000/api/posts/" + id);//
+    }>("http://blog-env.eba-xen2vqe3.us-east-2.elasticbeanstalk.com/api/posts" + id);
   }
 
   addPost(title: string, content: string, image: File) {
@@ -63,7 +65,8 @@ export class PostsService {
     postData.append("image", image, title);
     this.http
       .post<{ message: string; post: Post }>(
-        "http://localhost:3000/api/posts",
+        //"http://localhost:3000/api/posts",//
+        "http://blog-env.eba-xen2vqe3.us-east-2.elasticbeanstalk.com/api/posts",
         postData
       )
       .subscribe(responseData => {
@@ -88,7 +91,8 @@ export class PostsService {
       };
     }
     this.http
-      .put("http://localhost:3000/api/posts/" + id, postData)
+      //.put("http://localhost:3000/api/posts/" + id, postData)//
+      .put("http://blog-env.eba-xen2vqe3.us-east-2.elasticbeanstalk.com/api/posts" + id, postData)
       .subscribe(response => {
         this.router.navigate(["/"]);
       });
@@ -96,6 +100,7 @@ export class PostsService {
 
   deletePost(postId: string) {
     return this.http
-      .delete("http://localhost:3000/api/posts/" + postId);
+      //.delete("http://localhost:3000/api/posts/" + postId);//
+      .delete("http://blog-env.eba-xen2vqe3.us-east-2.elasticbeanstalk.com/api/posts" + postId);
   }
 }
